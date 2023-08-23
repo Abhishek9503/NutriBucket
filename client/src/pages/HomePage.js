@@ -1,14 +1,27 @@
+
+
 // import React, { useState, useEffect } from "react";
-// import { useAuth } from "../context/auth";
+// import { useNavigate } from "react-router-dom";
 // import { Checkbox, Radio } from "antd";
+// import {Prices} from '../components/Prices'
+// // import { useCart } from "../context/cart"
+// // import  useCart from "../context/cart";
 // import axios from "axios";
+// import toast from "react-hot-toast";
 // import Layout from "./../components/Layout/Layout";
+// import { AiOutlineReload } from "react-icons/ai";
+// import "../styles/Homepage.css";
 
 // const HomePage = () => {
 //   const navigate = useNavigate();
-//   const [auth, setAuth] = useAuth();
+//   // const [cart, setCart] = useCart();
 //   const [products, setProducts] = useState([]);
 //   const [categories, setCategories] = useState([]);
+//   const [checked, setChecked] = useState([]);
+//   const [radio, setRadio] = useState([]);
+//   const [total, setTotal] = useState(0);
+//   const [page, setPage] = useState(1);
+//   const [loading, setLoading] = useState(false);
 
 //   //get all cat
 //   const getAllCategory = async () => {
@@ -24,25 +37,40 @@
 
 //   useEffect(() => {
 //     getAllCategory();
+//     getTotal();
 //   }, []);
-
 //   //get products
 //   const getAllProducts = async () => {
 //     try {
-//       const { data } = await axios.get("/api/v1/product/get-product");
+//       setLoading(true);
+//       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+//       setLoading(false);
 //       setProducts(data.products);
+//     } catch (error) {
+//       setLoading(false);
+//       console.log(error);
+//     }
+//   };
+
+//   //getTOtal COunt
+//   const getTotal = async () => {
+//     try {
+//       const { data } = await axios.get("/api/v1/product/product-count");
+//       setTotal(data?.total);
 //     } catch (error) {
 //       console.log(error);
 //     }
 //   };
 
 //   useEffect(() => {
-//   getAllCategory();
-//   }, []);
-//   //get products
-//   const getAllProducts = async () => {
+//     if (page === 1) return;
+//     loadMore();
+//   }, [page]);
+//   //load more
+//   const loadMore = async () => {
 //     try {
-//       const { data } = await axios.get("/api/v1/product/get-product");
+//       setLoading(true);
+//       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
 //       setLoading(false);
 //       setProducts([...products, ...data?.products]);
 //     } catch (error) {
@@ -85,7 +113,7 @@
 //     <Layout title={"ALl Products - Best offers "}>
 //       {/* banner image */}
 //       <img
-//         src="/images/banner.png"
+//         src="/images/banner.jpeg"
 //         className="banner-img"
 //         alt="bannerimage"
 //         width={"100%"}
@@ -199,6 +227,7 @@
 // };
 
 // export default HomePage;
+
 
 
 // import React, { useState, useEffect } from "react";
@@ -415,7 +444,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Checkbox, Radio } from "antd";
 import {Prices} from '../components/Prices'
-// import { useCart } from "../context/cart"
+import { useCart } from "../context/cart"
 // import  useCart from "../context/cart";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -467,6 +496,7 @@ const HomePage = () => {
   const getTotal = async () => {
     try {
       const { data } = await axios.get("/api/v1/product/product-count");
+      
       setTotal(data?.total);
     } catch (error) {
       console.log(error);
@@ -524,7 +554,7 @@ const HomePage = () => {
     <Layout title={"ALl Products - Best offers "}>
       {/* banner image */}
       <img
-        src="/images/banner.png"
+        src="/images/banner.jpeg"
         className="banner-img"
         alt="bannerimage"
         width={"100%"}
